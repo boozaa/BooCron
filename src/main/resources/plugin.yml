@@ -1,0 +1,8 @@
+author: boozaa
+database: true
+description: "Plugin BooCron"
+generator: Boozaa Bukkit Generator
+main: org.shortrip.boozaa.plugins.boocron.BooCron
+name: BooCron
+startup: POSTWORLD
+version: '0.1'
