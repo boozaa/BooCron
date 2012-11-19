@@ -132,8 +132,7 @@ public class BooCron extends JavaPlugin {
 		 */
 		if( configuration.get("config.debug") != null ){
 			debug = configuration.getBoolean("config.debug");
-		}
-		
+		}		
 		
     }
     
@@ -202,8 +201,6 @@ public class BooCron extends JavaPlugin {
             	Log.info("- Config - " + str);
             }
         }
-
-        
 
     }
 
