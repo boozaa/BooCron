@@ -4,7 +4,11 @@ import org.shortrip.boozaa.plugins.boocron.persistence.Cache;
 import org.shortrip.boozaa.plugins.boocron.persistence.Database;
 import org.shortrip.boozaa.plugins.boocron.persistence.Configuration;
 import org.shortrip.boozaa.plugins.boocron.utils.Log;
+import org.shortrip.boozaa.plugins.boocron.utils.Metrics;
+
 import java.io.File;
+import java.io.IOException;
+
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,7 +35,9 @@ import java.util.TimeZone;
 */
 public class BooCron extends JavaPlugin {
 
-    private static CronScheduler scheduler;
+    private Metrics metrics;
+	
+	private static CronScheduler scheduler;
     public static CronScheduler getScheduler(){
     	return scheduler;
     }
@@ -132,7 +138,26 @@ public class BooCron extends JavaPlugin {
 		 */
 		if( configuration.get("config.debug") != null ){
 			debug = configuration.getBoolean("config.debug");
-		}		
+		}	
+		
+		
+		/*
+		 * Metrics
+		 */
+		if( configuration.get("metrics.enable") != null ){
+			if( configuration.getBoolean("metrics.enable") ){
+				try {
+					metrics = new Metrics(this);
+					metrics.start();
+					Log.info("Metrics thread started");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			}
+		}
+		
+		
 		
     }
     
@@ -191,6 +216,12 @@ public class BooCron extends JavaPlugin {
             messages.add("config.debug - Enable or not debug console logging");
 		}	
         
+        // Metrics
+        if( configuration.get("metrics.enable") == null ) {			
+        	configuration.set("metrics.enable", 	(Boolean)true);
+        	updated = true;
+            messages.add("metrics.enable - Enable or not metrics stats");
+		}
         
         // Log des modifs
         if( updated ) {	
