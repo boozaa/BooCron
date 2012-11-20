@@ -1,8 +1,8 @@
 author: boozaa
 database: true
-description: "Plugin BooCron"
+description: "Plugin BooCron - Implementation of Cron4J"
 generator: Boozaa Bukkit Generator
 main: org.shortrip.boozaa.plugins.boocron.BooCron
 name: BooCron
 startup: POSTWORLD
-version: '0.1'
+version: '0.2'
